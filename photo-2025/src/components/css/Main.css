@@ -1,0 +1,260 @@
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    padding: 50px;
+}
+
+.gallery-item {
+    text-align: center;
+    cursor: pointer;
+}
+
+.gallery-item img {
+    width: 80%;
+    height: 60%;
+    border-radius: 10px;
+}
+
+.services-table table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 3px solid var(--accent-color);
+}
+
+.services-table th,
+.services-table td {
+    border: 2px solid var(--accent-color);
+    padding: 10px;
+    text-align: left;
+}
+
+#month-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#month-grid img {
+    width: 100%;
+    height: 75%;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+#month-grid img:hover {
+    transform: scale(1.05);
+}
+
+.form-section {
+    display: flex;
+    justify-content: flex-start;
+    width: 60%;
+    margin: 0 auto;
+}
+
+.form-section form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    width: 100%;
+}
+
+.form-section label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-section input,
+.form-section select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.calendar-preview {
+    margin-top: 20px;
+    text-align: left;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    text-align: center;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+#modal-image {
+    width: 300px;
+    max-height: 400px;
+    object-fit: cover;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+.calendar-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.calendar-month {
+    padding: 10px;
+    border: 2px solid var(--accent-color);
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.calendar-month:hover {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.view-times {
+    padding: 8px;
+    margin-top: 5px;
+    background-color: var(--secondary-bg);
+    border: none;
+    cursor: pointer;
+}
+
+/* Hero Section */
+.hero {
+    background: url('https://picsum.photos/1400/900') no-repeat center center/cover;
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
+    position: relative;
+    border: 5px solid white;
+}
+
+/* Sections */
+.section-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+    padding: 50px 20px;
+}
+
+.text-section {
+    flex-direction: column;
+    flex: 1;
+    padding: 20px;
+}
+
+.about-section {
+    width: 70%;
+    height: 70%;
+    border-radius: 10px;
+}
+
+.image-section {
+    flex: 1;
+    padding-left: 75px;
+    padding-right: 75px;
+}
+
+.image-section img {
+    width: 70%;
+    height: auto;
+    border-radius: 10px;
+    
+}
+
+.alt-section {
+    flex-direction: row-reverse;
+}
+
+/* Client Reviews */
+.client-review {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    background: var(--secondary-bg);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.client-review img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+    max-width: fit-content;
+    margin: 0 auto;
+  }
+  
+  .columns > div {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .columns > div:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .columns img {
+    width: 100%;
+    height: 200px; /* Set a fixed height for all images */
+    object-fit: cover;  /* Important: Maintain aspect ratio and crop */
+    border-radius: 4px;
+  }
+  
+  @media (max-width: 768px) {
+    .columns {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .columns {
+      grid-template-columns: 1fr;
+    }
+  }
+  

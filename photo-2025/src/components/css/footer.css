@@ -1,5 +1,27 @@
+/* Footer */
 footer {
-    background: orange;
+    background-color: var(--accent-color);
+    color: var(--secondary-bg);
     text-align: center;
-    padding: 5px;
-};
+    padding: 20px;
+    margin-top: 50px;
+}
+
+.newsletter form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.newsletter input {
+    padding: 10px;
+    width: 200px;
+}
+
+.newsletter button {
+    padding: 10px 20px;
+    background: var(--accent-color);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
