@@ -2,8 +2,35 @@ import React from 'react';
 import './css/About.css'; // Import the About component's CSS
 import Footer from '../components/footer'; // Import Footer
 import '../components/Main'; // Import the main styles
+import {useState} from "react";
 
 function About() {
+    
+    const [result, setResult] = React.useState("");
+
+    const onSubmit = async (event) => {
+      event.preventDefault();
+      setResult("Sending....");
+      const formData = new FormData(event.target);
+  
+      formData.append("access_key", "4b8fd46f-ec1d-4b49-bd2e-546648271be3");
+  
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+  
+      const data = await response.json();
+  
+      if (data.success) {
+        setResult("Form Submitted Successfully");
+        event.target.reset();
+      } else {
+        console.log("Error", data);
+        setResult(data.message);
+      }
+    };
+
   return (
     <main>
       <section className="hero">
@@ -26,7 +53,7 @@ function About() {
       <h2>Contact Me</h2>
 
       <section className="form-section">
-        <form method="POST" id="form">
+        <form onSubmit={onSubmit}>
           <input type="hidden" name="access_key" value="4b8fd46f-ec1d-4b49-bd2e-546648271be3" />
 
           <label htmlFor="name">Full Name:</label>
@@ -43,7 +70,9 @@ function About() {
           <button type="submit">Submit Form</button>
 
           <div id="result"></div>
+          <span>{result}</span>
         </form>
+        
       </section>
 
       <aside className="faq">

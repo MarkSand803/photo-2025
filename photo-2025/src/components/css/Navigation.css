@@ -1,3 +1,7 @@
+#main-nav ul {
+    display:flex;
+}
+
 nav ul {
     list-style: none;
     padding: 0;
@@ -19,4 +23,45 @@ nav ul li a {
 
 nav ul li a:hover {
     text-decoration: underline;
+}
+#main-nav .hide-small {
+    display:none;
+}
+
+/* Toggle Menu */
+#toggle-nav {
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+#toggle-nav div {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 5px 0;
+}
+
+@media screen and (max-width: 1200px) {
+    nav ul {
+        display: none;
+        flex-direction: column;
+        background-color: var(--accent-color);
+        position: none;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        padding: 10px 0;
+    }
+
+    nav ul.active {
+        display: flex;
+    }
+
+    #toggle-nav {
+        display: block;
+    }
 }

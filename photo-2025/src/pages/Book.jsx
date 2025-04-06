@@ -4,6 +4,32 @@ import Footer from '../components/footer'; // Import Footer
 import '../components/Main'; // Import the main styles
 
 function Book() {
+
+  const [result, setResult] = React.useState("");
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    setResult("Sending....");
+    const formData = new FormData(event.target);
+
+    formData.append("access_key", "4b8fd46f-ec1d-4b49-bd2e-546648271be3");
+
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      setResult("Form Submitted Successfully");
+      event.target.reset();
+    } else {
+      console.log("Error", data);
+      setResult(data.message);
+    }
+  };
+
   return (
     <main>
       <section className="hero">
@@ -12,7 +38,7 @@ function Book() {
       </section>
 
       <section className="form-section">
-        <form method="POST" id="form">
+      <form onSubmit={onSubmit}>
           <input type="hidden" name="access_key" value="4b8fd46f-ec1d-4b49-bd2e-546648271be3" />
 
           <label htmlFor="name">Full Name:</label>
@@ -51,10 +77,12 @@ function Book() {
           <button type="submit">Submit</button>
 
           <div id="result"></div>
+          <span>{result}</span>
 
           <p>*A down payment of one hour of service will be charged before arrival</p>
           <p>*Cancelation should be called in within 14 days of event</p>
         </form>
+        
       </section>
       <Footer /> {/* Add Footer at the bottom */}
     </main>
