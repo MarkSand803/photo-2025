@@ -1,18 +1,16 @@
-
 import './css/Photo.css';
 import React from "react";
 
-function Photo(photo) {
-    const imageSrc = `https://msphotograph-2025.onrender.com/api/portfolio/${photo.img_name}`;
-    //https://msphotograph-2025.onrender.com/api/portfolio 
-    return  (
+function Photo( photo ) {
+  return  (
     <section className="photo">
-        <h3>{photo.title}</h3>
-        <p>{photo.location}</p>
-        <p>{photo.date}</p>
-        <img src={process.env.PUBLIC_URL + "/" + photo.img_name} />
+      <h3>{photo.title}</h3>
+      <p>{photo.location}</p>
+      <p>{photo.date}</p>
+      {/* Use the same pattern as your professor's code */}
+      <img src={`https://msphotograph-2025.onrender.com/images/${photo.img_name.replace('images/', '')}`} alt={photo.title} />
     </section>
-    );
+  );
 }
 
 export default Photo;
