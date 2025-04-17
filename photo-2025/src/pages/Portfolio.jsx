@@ -1,75 +1,105 @@
 import './css/Portfolio.css';
 import Photo from '../components/photo';
-import Footer from '../components/footer'; // Import Footer
-import '../components/Main'; // Import the main styles
+import Footer from '../components/footer';
+import '../components/Main';
 import axios from "axios";
-import { useState, useEffect } from 'react'; // Import useState and useEffect
-import AddPhoto from '../components/Addphoto'; // Import the AddPhoto component (Corrected import)
+import { useState, useEffect } from 'react';
+import AddPhoto from '../components/Addphoto';
+import EditPhoto from '../components/Editphoto'; // Corrected import to PascalCase
 
-    //https://msphotograph-2025.onrender.com/api/portfolio
-    //https://msphotograph-2025.onrender.com/api/portfolio
+function Portfolio() {
+    const [photos, setPhotos] = useState([]);
+    const [showAddDialog, setShowAddDialog] = useState(false);
+    const [editingPhotoId, setEditingPhotoId] = useState(null); // To track which photo is being edited
+    const [showEditDialog, setShowEditDialog] = useState(false);
 
-    function Portfolio() {
-
-        const [photos, setPhotos] = useState([]);
-        const [showAddDialog, setShowAddDialog] = useState(false);
-
-        useEffect(() => {
-            const fetchPhotos = async () => {
-                try {
-                    const response = await axios.get(
-                        "https://msphotograph-2025.onrender.com/api/portfolio"
-                    );
-                    setPhotos(response.data); // Update the 'photos' state
-                } catch (error) {
-                    console.error("Error fetching data:", error);
-                }
-            };
-
-            fetchPhotos();
-        }, []); // Empty dependency array ensures this runs only once
-
-        const openAddDialog = () => {
-            setShowAddDialog(true);
+    useEffect(() => {
+        const fetchPhotos = async () => {
+            try {
+                const response = await axios.get(
+                    "https://msphotograph-2025.onrender.com/api/portfolio/"
+                );
+                setPhotos(response.data);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
         };
 
-        const closeAddDialog = () => {
-            setShowAddDialog(false);
-        };
+        fetchPhotos();
+    }, []);
 
-        const updatePhotos = (newPhoto) => {
-            setPhotos((prevPhotos) => [...prevPhotos, newPhoto]);
-        };
+    const openAddDialog = () => {
+        setShowAddDialog(true);
+    };
 
-        return (
-            <>
-                <button id="add-photo-button" onClick={openAddDialog}>Add Photo</button>
+    const closeAddDialog = () => {
+        setShowAddDialog(false);
+    };
 
-                {showAddDialog && (
-                    <AddPhoto
-                        closeAddDialog={closeAddDialog}
-                        updatePhotos={updatePhotos}
+    const updatePhotos = (newPhoto) => {
+        setPhotos((prevPhotos) => [...prevPhotos, newPhoto]);
+    };
+
+    const deletePhoto = (photoId) => {
+        console.log("Trying to delete " + photoId);
+        setPhotos(prevPhotos => prevPhotos.filter(photo => photo._id !== photoId));
+        // You'll likely want to make an API call here to delete from the server as well
+    };
+
+    const openEditDialog = (id) => {
+        setEditingPhotoId(id);
+        setShowEditDialog(true);
+    };
+
+    const closeEditDialog = () => {
+        setEditingPhotoId(null);
+        setShowEditDialog(false);
+    };
+
+    const editPhotoInList = (updatedPhoto) => {
+        console.log("Trying to edit " + updatedPhoto._id);
+        setPhotos(prevPhotos =>
+            prevPhotos.map(photo =>
+                photo._id === updatedPhoto._id ? { ...photo, ...updatedPhoto } : photo
+            )
+        );
+        closeEditDialog(); // Close the edit dialog after updating
+    };
+
+    const photoToEdit = photos.find(photo => photo._id === editingPhotoId);
+
+    return (
+        <>
+            <button id="add-photo-button" onClick={openAddDialog}>Add Photo</button>
+
+            {showAddDialog && (
+                <AddPhoto
+                    closeAddDialog={closeAddDialog}
+                    updatePhotos={updatePhotos}
+                />
+            )}
+
+            {showEditDialog && photoToEdit && (
+                <EditPhoto
+                    {...photoToEdit}
+                    closeEditDialog={closeEditDialog}
+                    editPhoto={editPhotoInList}
+                />
+            )}
+
+            <section className="columns">
+                {photos.map((photo) => (
+                    <Photo
+                        key={photo._id}
+                        {...photo}
+                        deletePhoto={deletePhoto}
+                        openEditDialog={openEditDialog} // Pass the openEditDialog function
                     />
-                )}
-
-                <section className="columns">
-                    {photos.map((photo) => ( // Map over the 'photos' state
-                        <Photo
-                            key={photo._id} // Use a unique key from the data
-                            id={photo._id}
-                            title={photo.title}
-                            location={photo.location}
-                            name={photo.name}
-                            img_name={photo.img_name}
-                            date={photo.date}
-                            details={photo.details} // Corrected typo: deatials to details
-                        />
-                    ))}
-        </section>
-        <Footer /> {/* Add Footer at the bottom */}
-
-    </>
-);
+                ))}
+            </section>
+            <Footer />
+        </>
+    );
 }
 
 export default Portfolio;

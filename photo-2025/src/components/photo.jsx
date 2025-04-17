@@ -1,15 +1,68 @@
+// Photo.jsx
 import './css/Photo.css';
-import React from "react";
+import React, { useState } from "react";
+import EditPhoto from "./Editphoto"; // Import the EditPhoto component
+import DeletePhoto from "./Deletephoto"; // Import the DeletePhoto component
 
-function Photo( photo ) {
-  return  (
-    <section className="photo">
-      <h3>{photo.title}</h3>
-      <p>{photo.location}</p>
-      <p>{photo.date}</p>
-      {/* Use the same pattern as your professor's code */}
-      <img src={`https://msphotograph-2025.onrender.com/images/${photo.img_name.replace('images/', '')}`} alt={photo.title} />
-    </section>
+function Photo(props) {
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showPhoto, setShowPhoto] = useState(true);
+
+  const openDeleteDialog = () => {
+    setShowDeleteDialog(true);
+  };
+
+  const closeDeleteDialog = () => {
+    setShowDeleteDialog(false);
+  };
+
+  const hidePhoto = () => {
+    setShowPhoto(false);
+  };
+
+  return (
+    <>
+      {showPhoto ? (
+        <section className="photo">
+          {showDeleteDialog ? (
+            <DeletePhoto
+              _id={props._id}
+              title={props.title}
+              closeDeleteDialog={closeDeleteDialog}
+              deletePhotoFromList={props.deletePhoto}
+            />
+          ) : null}
+
+          {/* Edit Dialog is now managed in Portfolio.jsx */}
+          {/* <EditPhoto
+            _id={props._id}
+            title={props.title}
+            location={props.location}
+            name={props.name}
+            date={props.date}
+            img_name={props.img_name}
+            details={props.details}
+            closeEditDialog={() => {}} // These will be handled in Portfolio
+            editPhoto={() => {}}
+          /> */}
+
+          <header className="photo-header">
+            <h3>{props.title}</h3>
+            <section id="change-buttons">
+              <a href="#" onClick={() => props.openEditDialog(props._id)}> {/* Call the prop */}
+                &#9998;
+              </a>
+              <a href="#" onClick={openDeleteDialog}>
+                &#x2715;
+              </a>
+            </section>
+          </header>
+          <p>{props.location}</p>
+          <p>{props.date}</p>
+          <img src={`https://msphotograph-2025.onrender.com/images/${props.img_name.replace('images/', '')}`} alt={props.title} />
+        </section>
+      ) : null}
+    </>
   );
 }
 
